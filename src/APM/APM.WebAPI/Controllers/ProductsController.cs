@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Web.Hosting;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using APM.Domain.Model;
 using APM.Domain.Repository;
 
 namespace APM.WebAPI.Controllers
 {
+    [EnableCors("http://localhost:51735","*","*")]
     public class ProductsController : ApiController
     {
         private readonly IProductRepository productRepository;

@@ -17,10 +17,12 @@ namespace APM.WebAPI
             //TODO: Later in the course
             //config.SuppressDefaultHostAuthentication();
             //config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
-
             // Web API routes
             config.MapHttpAttributeRoutes();
-
+            //Manually Added with the "Microsoft.AspNet.WebApi.Cors" package
+            config.EnableCors();
+            //Setting the Serialization format for camel case
+            config.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
