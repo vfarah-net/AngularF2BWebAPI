@@ -7,7 +7,8 @@ using System.Web.Http;
 
 namespace APM.WebAPI.Controllers
 {
-    [Authorize]
+    //TODO: When doing Authorization
+    //[Authorize]
     public class ValuesController : ApiController
     {
         // GET api/values

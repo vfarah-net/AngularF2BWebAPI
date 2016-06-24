@@ -19,7 +19,8 @@ using APM.WebAPI.Results;
 
 namespace APM.WebAPI.Controllers
 {
-    [Authorize]
+    //TOD: Add back at a later stage
+    //[Authorize]
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
     {
