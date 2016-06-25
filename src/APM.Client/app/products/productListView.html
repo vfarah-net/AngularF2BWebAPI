@@ -1,27 +1,38 @@
 <div class="panel panel-primary"
      ng-controller="productListCtrl as vm">
-    <div class="panel-heading"
-         style="font-size:large">
+
+    <div class="navbar-form navbar-left" role="search">
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="Search" data-ng-model="search_term" data-ng-change="filterSearchTerm()" ng-model-options="{debounce: 500}"></>
+        </div>
+    </div>
+
+    <div class="search-summary">
+        <p><span class="field">You searched for:</span> {{ search_term }}
+        </p>
+    </div>
+
+    <div class="panel-heading" style="font-size: large">
         Product List
     </div>
 
     <div class="panel-body">
         <table class="table">
             <thead>
-                <tr>
-                    <td>Product</td>
-                    <td>Code</td>
-                    <td>Available</td>
-                    <td>Price</td>
-                </tr>
+            <tr>
+                <td>Product</td>
+                <td>Code</td>
+                <td>Available</td>
+                <td>Price</td>
+            </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="product in vm.products">
-                    <td>{{ product.productName}}</td>
-                    <td>{{ product.productCode }}</td>
-                    <td>{{ product.releaseDate | date }}</td>
-                    <td>{{ product.price | currency }}</td>
-                </tr>
+            <tr ng-repeat="product in vm.products">
+                <td>{{ product.productName}}</td>
+                <td>{{ product.productCode }}</td>
+                <td>{{ product.releaseDate | date }}</td>
+                <td>{{ product.price | currency }}</td>
+            </tr>
             </tbody>
         </table>
     </div>

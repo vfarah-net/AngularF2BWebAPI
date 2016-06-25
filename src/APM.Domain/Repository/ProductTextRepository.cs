@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using APM.Domain.Model;
 using Newtonsoft.Json;
+using APM.Domain.Extensions;
 
 namespace APM.Domain.Repository
 {
@@ -40,6 +41,16 @@ namespace APM.Domain.Repository
         public Product FindProductId(int productId)
         {
             return Retrieve().SingleOrDefault(each => each.ProductId == productId);
+        }
+
+        public IList<Product> Search(string search, StringComparison stringComparison = StringComparison.OrdinalIgnoreCase)
+        {
+            if (search != null)
+            {
+                return Retrieve().Where(each => each.ProductCode.Contains(search, stringComparison) || 
+                each.ProductName.Contains(search, stringComparison)).ToList();
+            }
+            return Retrieve();
         }
 
         public Product Save(Product product)
