@@ -7,9 +7,9 @@ namespace APM.Domain.Repository
     public interface IProductRepository
     {
         Product Create();
-        IList<Product> Retrieve();
+        IEnumerable<Product> Retrieve();
         Product FindProductId(int productId);
-        IList<Product> Search(string search, StringComparison stringComparison = StringComparison.OrdinalIgnoreCase);
+        IEnumerable<Product> Search(string search, StringComparison stringComparison = StringComparison.OrdinalIgnoreCase);
         Product Save(Product product);
         void Delete(int id);
     }

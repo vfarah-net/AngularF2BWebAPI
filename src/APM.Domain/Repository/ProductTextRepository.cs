@@ -29,7 +29,7 @@ namespace APM.Domain.Repository
             return product;
         }
 
-        public IList<Product> Retrieve()
+        public IEnumerable<Product> Retrieve()
         {
             var json = System.IO.File.ReadAllText(filePath);
 
@@ -43,19 +43,19 @@ namespace APM.Domain.Repository
             return Retrieve().SingleOrDefault(each => each.ProductId == productId);
         }
 
-        public IList<Product> Search(string search, StringComparison stringComparison = StringComparison.OrdinalIgnoreCase)
+        public IEnumerable<Product> Search(string search, StringComparison stringComparison = StringComparison.OrdinalIgnoreCase)
         {
             if (search != null)
             {
                 return Retrieve().Where(each => each.ProductCode.Contains(search, stringComparison) || 
-                each.ProductName.Contains(search, stringComparison)).ToList();
+                each.ProductName.Contains(search, stringComparison));
             }
             return Retrieve();
         }
 
         public Product Save(Product product)
         {
-            var products = this.Retrieve();
+            var products = this.Retrieve().ToList();
             // Assign a new Id
             var maxId = products.Max(p => p.ProductId);
             product.ProductId = maxId + 1;
