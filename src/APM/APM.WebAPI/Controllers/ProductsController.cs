@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Hosting;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using System.Web.Http.OData;
 using APM.Domain.Model;
 using APM.Domain.Repository;
 
@@ -18,10 +20,11 @@ namespace APM.WebAPI.Controllers
             this.productRepository = new ProductTextRepository(HostingEnvironment.MapPath(@"~/App_Data/product.json"));
         }
 
-        // GET: api/Products
-        public IEnumerable<Product> Get()
+        // GET: api/Products and ODATA stuff now
+        [EnableQuery()]
+        public IQueryable<Product> Get()
         {
-            return productRepository.Retrieve();
+            return productRepository.Retrieve().AsQueryable();
         }
 
         //GET api/Products? search = { search }
