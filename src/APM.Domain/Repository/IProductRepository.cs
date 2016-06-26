@@ -9,7 +9,7 @@ namespace APM.Domain.Repository
         Product Create();
         IEnumerable<Product> Retrieve();
         Product FindProductId(int productId);
-        IEnumerable<Product> Search(string search, StringComparison stringComparison = StringComparison.OrdinalIgnoreCase);
+        IEnumerable<Product> Search(string search, StringComparison stringComparison = StringComparison.InvariantCultureIgnoreCase);
         Product Save(Product product);
         void Delete(int id);
     }

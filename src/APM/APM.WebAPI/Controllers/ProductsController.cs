@@ -10,7 +10,7 @@ using APM.Domain.Repository;
 
 namespace APM.WebAPI.Controllers
 {
-    //[EnableCors("http://localhost:51735","*","*")]
+    [EnableCors("http://localhost:51735","*","*")]
     public class ProductsController : ApiController
     {
         private readonly IProductRepository productRepository;
@@ -21,7 +21,7 @@ namespace APM.WebAPI.Controllers
         }
 
         // GET: api/Products and ODATA stuff now
-        [EnableQuery()]
+        [EnableQuery(PageSize = 50)]
         public IQueryable<Product> Get()
         {
             return productRepository.Retrieve().AsQueryable();

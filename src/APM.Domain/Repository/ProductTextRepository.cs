@@ -43,7 +43,7 @@ namespace APM.Domain.Repository
             return Retrieve().SingleOrDefault(each => each.ProductId == productId);
         }
 
-        public IEnumerable<Product> Search(string search, StringComparison stringComparison = StringComparison.OrdinalIgnoreCase)
+        public IEnumerable<Product> Search(string search, StringComparison stringComparison)
         {
             if (search != null)
             {
