@@ -27,14 +27,21 @@
         vm.submit = function () {
             if (vm.product.productId) {
                 vm.product.$update({ id: vm.product.productId },
-                function (data) {
-                    vm.message = "... Save Complete";
-                });
+                    function (data) {
+                        vm.message = "... Save Complete";
+                    },
+                    function (response) {
+                        vm.message = response.statusText + "\r\n";
+                    }
+                );
             } else {
                 vm.product.$save(
                     function (data) {
                         vm.originalProduct = angular.copy(data);
                         vm.message = "... Save Complete";
+                    },
+                    function (response) {
+                        vm.message = response.statusText + "\r\n";
                     }
                 );
             }

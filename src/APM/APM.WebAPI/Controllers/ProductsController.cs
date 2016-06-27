@@ -68,12 +68,13 @@ namespace APM.WebAPI.Controllers
                 return BadRequest("Product can not be null");
             }
 
-            if (value.ProductId == id)
+            if (value.ProductId != id)
             {
-                productRepository.Save(value);
-                return Ok();
+                return BadRequest("The id did not match");
             }
-            return BadRequest("The id did not match");
+                
+            productRepository.Save(value);
+            return Ok();
         }
 
         // DELETE: api/Products/5
