@@ -27,6 +27,7 @@ namespace APM.WebAPI.Controllers
             return productRepository.Retrieve().AsQueryable();
         }
 
+        ///<remarks>NOTE: This method becomes redundent with the use of ODATA</remarks>
         //GET api/Products? search = { search }
         public IEnumerable<Product> Get(string search)
         {
@@ -36,7 +37,7 @@ namespace APM.WebAPI.Controllers
         // GET: api/Products/5
         public Product Get(int id)
         {
-            return productRepository.FindProductId(id);
+            return id>0?productRepository.FindProductId(id):new Product();
         }
 
         // POST: api/Products

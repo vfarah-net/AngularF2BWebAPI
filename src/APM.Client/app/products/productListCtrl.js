@@ -5,7 +5,7 @@
         .controller("productListCtrl",
                     ["$scope", "$location", "productResource", productListCtrl]);
 
-    function productListCtrl($scope, $location, productResource) {        
+   function productListCtrl($scope, $location, productResource) {
         var vm = this;
         //example if this was used http://localhost:53689/index.html#?searchTerm=0035 to extract the searchTerm from the url
         var searchTerm = $location.search().searchTerm;
