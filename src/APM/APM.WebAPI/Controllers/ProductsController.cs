@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web.Hosting;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using System.Web.Http.Description;
 using System.Web.Http.OData;
 using APM.Domain.Model;
 using APM.Domain.Repository;
@@ -22,9 +23,18 @@ namespace APM.WebAPI.Controllers
 
         // GET: api/Products and ODATA stuff now
         [EnableQuery(PageSize = 50)]
+        //To facilitate the help documentation that has stopped workimg>    
+        [ResponseType(typeof(Product))] 
         public IHttpActionResult Get()
         {
-            return Ok(productRepository.Retrieve().AsQueryable());
+            try
+            {
+                return Ok(productRepository.Retrieve().AsQueryable());
+            }
+            catch (Exception exception)
+            {
+                return InternalServerError(exception);
+            }            
         }
 
         ///<remarks>NOTE: This method becomes redundent with the use of ODATA</remarks>
@@ -35,53 +45,84 @@ namespace APM.WebAPI.Controllers
         //}
 
         // GET: api/Products/5
+        [ResponseType(typeof(Product))]
         public IHttpActionResult Get(int id)
         {
-            var product = id > 0 ? productRepository.FindProductId(id) : new Product();
-            if (product != null)
+            try
             {
-                return Ok(product);
+                //Test scenario to see the messages that get passed back to the client
+                //throw new Exception("This message is passed back to the client");
+                var product = id > 0 ? productRepository.FindProductId(id) : new Product();
+                if (product != null)
+                {
+                    return Ok(product);
+                }
+                return NotFound();
             }
-            return NotFound();
+            catch (Exception exception)
+            {
+                return InternalServerError(exception);
+            }
         }
 
         // POST: api/Products
         public IHttpActionResult Post([FromBody]Product value)
         {
-            if (value == null)
+            try
             {
-                return BadRequest("Product can not be null");
+                if (value == null)
+                {
+                    return BadRequest("Product can not be null");
+                }
+                var newProduct = productRepository.Save(value);
+                if (newProduct == null)
+                {
+                    return Conflict();
+                }
+                return Created(Request.RequestUri + newProduct.ProductId.ToString(), newProduct);
             }
-            var newProduct = productRepository.Save(value);
-            if (newProduct == null)
+            catch (Exception exception)
             {
-                return Conflict();
+                return InternalServerError(exception);
             }
-            return Created(Request.RequestUri + newProduct.ProductId.ToString(), newProduct);
         }
 
         // PUT: api/Products/5
         public IHttpActionResult Put(int id, [FromBody]Product value)
         {
-            if (value == null)
+            try
             {
-                return BadRequest("Product can not be null");
-            }
+                if (value == null)
+                {
+                    return BadRequest("Product can not be null");
+                }
 
-            if (value.ProductId != id)
-            {
-                return BadRequest("The id did not match");
+                if (value.ProductId != id)
+                {
+                    return BadRequest("The id did not match");
+                }
+
+                productRepository.Save(value);
+                return Ok();
             }
-                
-            productRepository.Save(value);
-            return Ok();
+            catch (Exception exception)
+            {
+                return InternalServerError(exception);
+            }
         }
 
         // DELETE: api/Products/5
         public IHttpActionResult Delete(int id)
         {
-            productRepository.Delete(id);
-            return Ok();
+            try
+            {
+                productRepository.Delete(id);
+                return Ok();
+            }
+            catch (Exception exception)
+            {
+                return InternalServerError(exception);
+            }
         }
     }
 }

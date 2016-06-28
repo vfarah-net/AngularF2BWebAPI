@@ -15,6 +15,10 @@
             function (data) {
                 vm.product = data;
                 vm.originalProduct = angular.copy(data);
+            }, function (response) {
+                if (response.data.exceptionMessage) {
+                    vm.message = response.data.exceptionMessage;
+                }
             });
 
         if (vm.product && vm.product.productId) {
@@ -32,6 +36,9 @@
                     },
                     function (response) {
                         vm.message = response.statusText + "\r\n";
+                        if (response.data.exceptionMessage) {
+                            vm.message = response.data.exceptionMessage;
+                        }
                     }
                 );
             } else {
@@ -42,6 +49,9 @@
                     },
                     function (response) {
                         vm.message = response.statusText + "\r\n";
+                        if (response.data.exceptionMessage) {
+                            vm.message = response.data.exceptionMessage;
+                        }
                     }
                 );
             }
