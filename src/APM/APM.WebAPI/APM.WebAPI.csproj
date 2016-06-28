@@ -350,6 +350,10 @@
       <Project>{e7e7e853-c628-4a36-b6bc-c536e3909c48}</Project>
       <Name>APM.Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\APM.Resources\APM.Resources.csproj">
+      <Project>{EE600396-83A4-482D-B0CD-F66DF808727E}</Project>
+      <Name>APM.Resources</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

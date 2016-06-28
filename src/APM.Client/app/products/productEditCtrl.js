@@ -36,8 +36,15 @@
                     },
                     function (response) {
                         vm.message = response.statusText + "\r\n";
-                        if (response.data.exceptionMessage) {
-                            vm.message = response.data.exceptionMessage;
+                        if (response.data && response.data.exceptionMessage) {
+                            vm.message += response.data.exceptionMessage;
+                        }
+                        if (response.data && response.data.modelState) {
+                            for(var key in response.data.modelState) {
+                                if (response.data.modelState.hasOwnProperty(key)) {
+                                    vm.message += response.data.modelState[key] + '\r\n';
+                                }
+                            }
                         }
                     }
                 );
@@ -49,8 +56,15 @@
                     },
                     function (response) {
                         vm.message = response.statusText + "\r\n";
-                        if (response.data.exceptionMessage) {
-                            vm.message = response.data.exceptionMessage;
+                        if (response.data && response.data.exceptionMessage) {
+                            vm.message += response.data.exceptionMessage;
+                        }
+                        if (response.data && response.data.modelState) {
+                            for (var key in response.data.modelState) {
+                                if (response.data.modelState.hasOwnProperty(key)) {
+                                    vm.message += response.data.modelState[key] + '\r\n';
+                                }
+                            }
                         }
                     }
                 );

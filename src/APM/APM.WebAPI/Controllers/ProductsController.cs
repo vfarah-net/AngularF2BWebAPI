@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web.Hosting;
 using System.Web.Http;
@@ -8,10 +7,11 @@ using System.Web.Http.Description;
 using System.Web.Http.OData;
 using APM.Domain.Model;
 using APM.Domain.Repository;
+using APM.Resources.WebApi;
 
 namespace APM.WebAPI.Controllers
 {
-    [EnableCors("http://localhost:51735", "*", "*")]
+    [EnableCors("http://localhost:53689", "*", "*")]
     public class ProductsController : ApiController
     {
         private readonly IProductRepository productRepository;
@@ -72,7 +72,11 @@ namespace APM.WebAPI.Controllers
             {
                 if (value == null)
                 {
-                    return BadRequest("Product can not be null");
+                    return BadRequest(ProductsResource.ProductNotNull_Message);
+                }
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
                 }
                 var newProduct = productRepository.Save(value);
                 if (newProduct == null)
@@ -94,12 +98,17 @@ namespace APM.WebAPI.Controllers
             {
                 if (value == null)
                 {
-                    return BadRequest("Product can not be null");
+                    return BadRequest(ProductsResource.ProductNotNull_Message);
                 }
 
                 if (value.ProductId != id)
                 {
-                    return BadRequest("The id did not match");
+                    return BadRequest(string.Format(ProductsResource.ProductIdMismatch_Message,id,value.ProductId));
+                }
+
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
                 }
 
                 productRepository.Save(value);
