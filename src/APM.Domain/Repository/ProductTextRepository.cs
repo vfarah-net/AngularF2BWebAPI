@@ -9,7 +9,7 @@ namespace APM.Domain.Repository
 {
     public class ProductTextRepository : IProductRepository
     {
-        private string filePath;
+        private readonly string filePath;
 
         public ProductTextRepository(string filePath)
         {

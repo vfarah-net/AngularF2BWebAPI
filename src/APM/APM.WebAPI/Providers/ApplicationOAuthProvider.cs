@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Configuration;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
@@ -32,6 +30,9 @@ namespace APM.WebAPI.Providers
             var userManager = context.OwinContext.GetUserManager<ApplicationUserManager>();
 
             ApplicationUser user = await userManager.FindAsync(context.UserName, context.Password);
+
+            //VVF: Added to allow access
+            context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new []{ConfigurationManager.AppSettings[Consts.AllowedOriginKey]});
 
             if (user == null)
             {

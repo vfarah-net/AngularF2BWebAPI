@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Linq;
 using System.Web.Hosting;
 using System.Web.Http;
@@ -11,14 +12,14 @@ using APM.Resources.WebApi;
 
 namespace APM.WebAPI.Controllers
 {
-    [EnableCors("http://localhost:53689", "*", "*")]
+    [EnableCors(Consts.AllowedOrigin, "*", "*")]
     public class ProductsController : ApiController
     {
         private readonly IProductRepository productRepository;
 
         public ProductsController()
         {
-            this.productRepository = new ProductTextRepository(HostingEnvironment.MapPath(@"~/App_Data/product.json"));
+            this.productRepository = new ProductTextRepository(HostingEnvironment.MapPath(@"~/App_Data/product.json"));            
         }
 
         // GET: api/Products and ODATA stuff now
