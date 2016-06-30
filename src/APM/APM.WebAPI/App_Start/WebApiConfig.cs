@@ -14,9 +14,8 @@ namespace APM.WebAPI
         {
             // Web API configuration and services
             // Configure Web API to use only bearer token authentication.
-            //TODO: Later in the course
-            //config.SuppressDefaultHostAuthentication();
-            //config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
+            config.SuppressDefaultHostAuthentication();
+            config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
             // Web API routes
             config.MapHttpAttributeRoutes();
             //Manually Added with the "Microsoft.AspNet.WebApi.Cors" package

@@ -5,11 +5,13 @@
         .module('productManagement')
         .controller('mainCtrl', mainCtrl);
 
-    mainCtrl.$inject = ['userAccount'];
+    mainCtrl.$inject = ['userAccount', 'currentUser'];
 
-    function mainCtrl(userAccount) {
+    function mainCtrl(userAccount, currentUser) {
         var vm = this;
-        vm.isLoggedIn = false;
+        vm.isLoggedIn = function() {
+            return currentUser.getProfile().isLoggedIn;
+        };
         vm.message = "";
         vm.userData = {
             userName: "",
@@ -27,7 +29,6 @@
                     vm.login();
                 },
                 function (response) {
-                    vm.isLoggedIn = false;
                     vm.message = response.statusText + "\r\n";
                     if (response.data && response.data.exceptionMessage) {
                         vm.message += response.data.exceptionMessage;
@@ -48,15 +49,12 @@
             vm.userData.userName = vm.userData.email;
             userAccount.login.loginUser(vm.userData,
                 function (data) {
-                    debugger;
-                    vm.isLoggedIn = true;
                     vm.message = "";
                     vm.password = "";
-                    vm.token = data.access_token;
+                    currentUser.setProfile(vm.userData.userName, data.access_token);
                 },
                 function (response) {
-                    vm.password = "";
-                    vm.isLoggedIn = false;
+                    vm.password = "";                    
                     if (response.data && response.data.exceptionMessage) {
                         vm.message += response.data.exceptionMessage;
                     }
@@ -71,6 +69,5 @@
                 }
             );
         }
-
     }
 })();

@@ -12,6 +12,7 @@ using APM.Resources.WebApi;
 
 namespace APM.WebAPI.Controllers
 {
+    [Authorize]
     [EnableCors(Consts.AllowedOrigin, "*", "*")]
     public class ProductsController : ApiController
     {
